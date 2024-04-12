@@ -11,23 +11,10 @@ const App = () => {
     });
   }, []);
 
-  const PopularMoviesList = () => {
-    return popularMovies.map((movie, i) => {
-      return (
-        <div className="Movie-wrapper" key={i}>
-          <div className="Movie-title">{movie.title}</div>
-          <img className="Movie-image" src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`} />
-          <div className="Movie-date">Release: {movie.release_date}</div>
-          <div className="Movie-rate">Rating: {movie.vote_average}</div>
-        </div>
-      );
-    });
-  };
-
   const search = async (q) => {
-    if(q.length > 3) {
-    const query = await searchMovie(q)
-    setPopularMovies(query.results)
+    if (q.length > 3) {
+      const query = await searchMovie(q);
+      setPopularMovies(query.results);
     }
   };
 
@@ -38,7 +25,14 @@ const App = () => {
         <input placeholder="cari film kesayangan anda..." className="Movie-search" onChange={({ target }) => search(target.value)} />
 
         <div className="Movie-container">
-          <PopularMoviesList />
+          {popularMovies.map((movie, i) => (
+            <div className="Movie-wrapper" key={i}>
+              <div className="Movie-title">{movie.title}</div>
+              <img className="Movie-image" src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`} alt={movie.title} />
+              <div className="Movie-date">Release: {movie.release_date}</div>
+              <div className="Movie-rate">Rating: {movie.vote_average}</div>
+            </div>
+          ))}
         </div>
       </header>
     </div>
